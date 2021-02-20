@@ -1,5 +1,6 @@
 version: '3.8'
 services:
+
   runner:
     image: maven:3.6.3-jdk-11
     working_dir: "/app/webapp"
@@ -7,6 +8,15 @@ services:
       - m2_cache:/root/.m2
       - .:/app
     entrypoint: 'mvn jetty:run -DskipTests'
+    ports:
+      - 8080:8080
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
 
 volumes:
   m2_cache:
