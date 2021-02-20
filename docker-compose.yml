@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  runner:
+    image: maven:3.6.3-jdk-11
+    working_dir: "/app/webapp"
+    volumes:
+      - m2_cache:/root/.m2
+      - .:/app
+    entrypoint: 'mvn jetty:run -DskipTests'
+
+volumes:
+  m2_cache:
