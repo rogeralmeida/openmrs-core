@@ -6,8 +6,11 @@ services:
     working_dir: "/app/webapp"
     volumes:
       - m2_cache:/root/.m2
+      - openmrs_config:/root/.OpenMRS
       - .:/app
     entrypoint: 'mvn jetty:run -DskipTests'
+    depends_on:
+      - db
     ports:
       - 8080:8080
 
@@ -17,6 +20,10 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - openmrs-mysql-datavolume:/var/lib/mysql
 
 volumes:
   m2_cache:
+  openmrs_config:
+  openmrs-mysql-datavolume:
